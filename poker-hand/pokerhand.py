@@ -3,7 +3,6 @@ from collections import defaultdict
 # Function to determine the number of occurences in one hand for each card
 def score(hand):
     ranks = '23456789TJQKA'
-    handBasicType = 'n'
     cards = ''.join(hand[0].split())
     cards = cards.split(',')
     rcounts = defaultdict(int)
@@ -26,6 +25,12 @@ def score(hand):
         else:
             handBasicType = 'Flush'
         return score, handBasicType
+
+    # Determines if hand is a straight
+    if len(ranks) == 5:
+        if ranks[0][0] - ranks[4][0] == 4:
+            handBasicType = 'Straight'
+            return score, handBasicType
     
 #score(['AS, 10C, 10H, 3D, 3S'])
-print(score(['AS, 10S, 9S, 3S, 4S']))
+print(score(['2S, 4C, 3D, 5H, 6D']))
