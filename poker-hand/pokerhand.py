@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+# Function to determine the number of occurences in one hand for each card
 def score(hand):
     ranks = '2345678910JQKA'
     cards = hand[0].split(',')
@@ -9,7 +10,6 @@ def score(hand):
         rcounts[rank] += 1
     sortedranks = {k: v for k, v in sorted(rcounts.items(),key=lambda item: item[1],reverse=True)}
 
-    print(sortedranks)
        
 
 
