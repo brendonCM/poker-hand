@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 # Function to determine the number of occurences in one hand for each card
-def ranksAndScore(hand):
+def ranksAndSuits(hand):
     ranks = '23456789TJQKA'
     cards = ''.join(hand[0].split())
     cards = cards.split(',')
@@ -16,12 +16,12 @@ def ranksAndScore(hand):
         suit = card[-1]
         scounts[suit] += 1
     ranks = sorted(rcounts.items(),reverse=True)
-    suites = sorted(scounts.items(),reverse=True)
-    return ranks, suites
+    suits = sorted(scounts.items(),reverse=True)
+    return ranks, suits
 
 def typePokerHand(ranks, suits):
 
-        # Determines if hand is flush
+    # Determines if hand is flush
     if len(suits) == 1:
         if ranks[0][0] == ranks[1][0]+1:
             handBasicType = 'Straight Flush'
@@ -56,7 +56,9 @@ def typePokerHand(ranks, suits):
             return 'One Pair'
 
 def poker(hand):
-    hands = [[hand,ranksAndScore(hand),""]]
+    hands = [[hand,ranksAndSuits(hand),""]]
     hands[0][2] = typePokerHand(hands[0][1][0],hands[0][1][1])
+    return hands[0][2]
 
-poker(['10S, 10H, 8S, 7H, 4C'])
+#poker(['10S, 10H, 8S, 7H, 4C'])
+print(poker(['KD, QD, 7S, 4S, 3H']))
