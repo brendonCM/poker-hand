@@ -9,22 +9,23 @@ def ranksAndSuits(hand):
     scounts = defaultdict(int)
     for card in cards:
         rank = card[:-1]
+        suit = card[-1]
         if rank.isalpha() == True:
-            rcounts[ranks.find(rank)+1]+=1
+            rcounts[ranks.find(rank)+2]+=1
         else:
             rcounts[int(rank)] += 1
-        suit = card[-1]
         scounts[suit] += 1
     ranks = sorted(rcounts.items(),reverse=True)
     suits = sorted(scounts.items(),reverse=True)
     return ranks, suits
+
 
 def typePokerHand(ranks, suits):
 
     # Determines if hand is flush
     if len(suits) == 1:
         if ranks[0][0] == ranks[1][0]+1:
-            handBasicType = 'Straight Flush'
+            return 'Straight Flush'
         else:
             return 'Flush'
 
@@ -35,11 +36,11 @@ def typePokerHand(ranks, suits):
         else:
             return 'High Card'
     
-    # Determines the type of kind for the hand
+    # Determines the type of kind for the hand and Pair
     if len(ranks) == 2:
         if ranks[0][1] == 4 and ranks[1][0] == 'J':
             return 'Five of a kind'
-        elif ranks[0][1] == 3 and ranks[1][1] == '2':
+        elif ranks[0][1] == 3 and ranks[1][1] == 2:
             return 'Full House'
         else:
             return 'Four of a kind'
@@ -55,10 +56,27 @@ def typePokerHand(ranks, suits):
         if ranks[0][1] == 2 and ranks[1][1] == 1 and ranks[2][1] == 1 and ranks[3][1] == 1:
             return 'One Pair'
 
+    return 'Not a proper poker hand'
+    
 def poker(hand):
     hands = [[hand,ranksAndSuits(hand),""]]
     hands[0][2] = typePokerHand(hands[0][1][0],hands[0][1][1])
     return hands[0][2]
 
-#poker(['10S, 10H, 8S, 7H, 4C'])
+#Expected output is High Card
 print(poker(['KD, QD, 7S, 4S, 3H']))
+
+#Expected output is Two Pair
+print(poker(['JH, JS, 3C, 3S, 2H']))
+
+#Expected output is Flush
+print(poker(['JD, 9D, 8D, 4D, 3D']))
+
+#Expected output is Four of a kind
+print(poker(['2D, 5C, 5D, 5H, 5S']))
+
+#Expected output is a Full House
+print(poker(['8D, 7C, 8H, 7H, 8S']))
+
+#Expected out is not a proper poker hand
+print(poker(['8D, 8C, 8H, 8H, 8S']))
