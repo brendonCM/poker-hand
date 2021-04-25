@@ -59,9 +59,9 @@ def typePokerHand(ranks, suits):
     return 'Not a proper poker hand'
     
 def poker(hand):
-    hands = [[hand,ranksAndSuits(hand),""]]
-    hands[0][2] = typePokerHand(hands[0][1][0],hands[0][1][1])
-    return hands[0][2]
+    type_hands = [hand,ranksAndSuits(hand)]
+    type_hands.append(typePokerHand(type_hands[1][0],type_hands[1][1]))
+    return type_hands[2]
 
 #Expected output is High Card
 print(poker(['KD, QD, 7S, 4S, 3H']))
